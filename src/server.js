@@ -14,18 +14,21 @@ const hostname = process.env.HOST_NAME;
 //create the connection to database
 
 //simple query
-connection.query(
-    'select *from Users',
-    function (err, results, fields) {
-        console.log(">>>results", results);
-    }
-);
+// connection.query(
+//     'select *from Users',
+//     function (err, results, fields) {
+//         console.log(">>>results", results);
+//     }
+// );
+//config req.body
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 //config template engine
 configViewEngine(app);
 //khai bao route
 app.use('/', webRoutes);
 
 app.listen(port, hostname, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${hostname}:${port}`)
 })
 
