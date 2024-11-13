@@ -1,10 +1,12 @@
 const express = require('express')
 
 const connection = require('../config/database');
-const e = require('express');
+const { getAllUsers } = require('../services/CRUDServices')
 
-const getHomepage = (req, res) => {
-    return res.render('home.ejs')
+const getHomepage = async (req, res) => {
+    let results = await getAllUsers();
+
+    return res.render('home.ejs', { listusers: results })
 };
 const getABS = (req, res) => {
     res.send('check ABC')
@@ -13,22 +15,40 @@ const thongmai = (req, res) => {
 
     res.render('sample.ejs')
 }
-const postCreateUser = (req, res) => {
+const postCreateUser = async (req, res) => {
     let email = req.body.Email;
     let name = req.body.myname;
     let city = req.body.city;
     console.log(req.body);
-    connection.query(
-        `INSERT into 
-        Users (email, name, city ) 
-        values (?,?,?)`,
-        [email, name, city],
-        function (err, results) {
-            console.log(results);
-            res.send('Create user succeed');
-        }
+    // connection.query(
+    //     `INSERT into 
+    //     Users (email, name, city ) 
+    //     values (?,?,?)`,
+    //     [email, name, city],
+    //     function (err, results) {
+    //         console.log(results);
+    //         res.send('Create user succeed');
+    //     }
+    // );
+    let [results, fields] = await connection.query(
+        `INSERT into Users (email, name, city ) values (?,?,?)`, [email, name, city],
     );
+    res.send("xong");
+
+
 }
+
+const getCreatePage = (req, res) => {
+    res.render('create.ejs');
+}
+const getUpdateuser = async (req, res) => {
+    const userId = req.params.id;
+    let [results, fields] = await connection.query('Select * from Users where id = ? ', [userId])
+    let user = results && results.length > 0 ? results[0] : {};
+
+    res.render('edit.ejs', { useredit: user });
+}
+
 module.exports = {
-    getHomepage, getABS, thongmai, postCreateUser
+    getHomepage, getABS, thongmai, postCreateUser, getCreatePage, getUpdateuser
 }
