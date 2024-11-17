@@ -1,7 +1,7 @@
 const express = require('express')
 
 const connection = require('../config/database');
-const { getAllUsers } = require('../services/CRUDServices')
+const { getAllUsers, updateuserid, deleteuserid } = require('../services/CRUDServices')
 
 const getHomepage = async (req, res) => {
     let results = await getAllUsers();
@@ -45,10 +45,23 @@ const getUpdateuser = async (req, res) => {
     const userId = req.params.id;
     let [results, fields] = await connection.query('Select * from Users where id = ? ', [userId])
     let user = results && results.length > 0 ? results[0] : {};
-
-    res.render('edit.ejs', { useredit: user });
+    res.render('edit.ejs', { useredit: user }); // truyền dữ liệu sang 
+}
+const postUpdateuser = async (req, res) => {
+    let email = req.body.Email;
+    let name = req.body.myname;
+    let city = req.body.city;
+    let id = req.body.id;
+    console.log(req.body);
+    await updateuserid(email, name, city, id)
+    res.redirect('/');// trả về chỉ định
+}
+const getDeleteuser = async (req, res) => {
+    const userId = req.params.id;
+    await deleteuserid(userId)
+    res.redirect('/')// trả về chỉ định
 }
 
 module.exports = {
-    getHomepage, getABS, thongmai, postCreateUser, getCreatePage, getUpdateuser
+    getHomepage, postUpdateuser, getABS, thongmai, postCreateUser, getCreatePage, getUpdateuser, getDeleteuser
 }

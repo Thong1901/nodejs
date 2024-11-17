@@ -38,7 +38,6 @@
     <div class="topnav">
         <a class="active" href="/">Home</a>
         <a href="/create">Creater User</a>
-        <a href="/update">Update</a>
 
     </div>
     <div class="table-container">
@@ -90,7 +89,8 @@
                     </td>
                     <td>
                         <a href="/update/<%= user.id %>">Edit</a>
-                        <button>Delete</button>
+                        <a href="/deleteuser/<%= user.id %>"
+                            onclick="return confirm('bạn có chắc muốn xóa user này không/')">delete</a>
                     </td>
                 </tr>
                 <% }); %>

@@ -8,37 +8,39 @@
 </head>
 
 <body>
-    <%= JSON.stringify(useredit) %>
-        <div class="topnav">
-            <a href="/">Home</a>
-            <a href="/create">Creater User</a>
-            <a class="active" href="/update">Update</a>
+    <!-- <%= JSON.stringify(useredit) %> -->
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/create">Creater User</a>
 
-        </div>
-        <div class="from">
-            <form action="/update" method="GET">
-                <fieldset>
-                    <legend>Form Update users</legend>
+    </div>
+    <div class="from">
+        <form action="/update-user" method="POST">
+            <fieldset>
+                <legend>Form Update users</legend>
+                <div class="input-group d-none">
+                    <label>id: </label>
+                    <input type="text" name="id" value="<%=useredit.id %>">
+                </div>
+                <div class="input-group">
+                    <label>Email: </label>
+                    <input type="text" name="Email" value="<%=useredit.email %>">
+                </div>
+                <div class="input-group">
+                    <label>Name: </label>
+                    <input type="text" name="myname" value="<%=useredit.name %>">
+                </div>
+                <div class=" input-group">
+                    <label>City: </label>
+                    <input type="text" name="city" value="<%=useredit.city %>">
+                </div>
+                <div>
+                    <button class="save">Save</button>
+                </div>
+            </fieldset>
+        </form>
 
-                    <div class="input-group">
-                        <label>Email: </label>
-                        <input type="text" name="Email" value="<%=useredit.email %>">
-                    </div>
-                    <div class="input-group">
-                        <label>Name: </label>
-                        <input type="text" name="myname" value="<%=useredit.name %>">
-                    </div>
-                    <div class=" input-group">
-                        <label>City: </label>
-                        <input type="text" name="city" value="<%=useredit.city %>">
-                    </div>
-                    <div>
-                        <button class=" save">Save</button>
-                    </div>
-                </fieldset>
-            </form>
-
-        </div>
+    </div>
 </body>
 
 </html>
